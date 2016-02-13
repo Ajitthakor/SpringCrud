@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="UserReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="96c341aa-8609-46f3-b7e6-dbf0fbbc06b5">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title"  fontSize="20" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontSize="12" isBold="true"/>
+	<style name="Detail"  fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<field name="uid" class="java.lang.Integer"/>
+	<field name="uname" class="java.lang.String"/>
+	<field name="city" class="java.lang.String"/>
+	<field name="state" class="java.lang.String"/>
+	<field name="country" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="135" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="164" height="126" uuid="0f384e53-f388-4438-b85c-adf59c1aa5e5"/>
+				<imageExpression><![CDATA["Report/coffee.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement style="Title" x="170" y="0" width="263" height="62" uuid="dc8607df-23e4-4460-b759-8012d37a2830"/>
+				<textElement verticalAlignment="Middle">
+					<font/>
+				</textElement>
+				<text><![CDATA[User Report]]></text>
+			</staticText>
+			<image>
+				<reportElement x="433" y="-115" width="267" height="209" uuid="1aa4a730-b2c5-4c74-bf06-14acef2c2322"/>
+				<imageExpression><![CDATA["Report/coffee_stain.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="40" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1" uuid="5d52bacd-edd6-4b16-970c-2b2f026efb85"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="0" y="2" width="100" height="20" uuid="56701799-54ac-41a5-812c-7e7f916ab48b"/>
+				<text><![CDATA[uid]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="117" y="2" width="100" height="20" uuid="bde5c47f-7f3a-4f23-af72-1a6fe93c35b9"/>
+				<text><![CDATA[uname]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="232" y="2" width="100" height="20" uuid="4e946952-036b-4bba-9f5e-1d2ccbc9fd5e"/>
+				<text><![CDATA[city]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="351" y="2" width="100" height="20" uuid="4e65a289-2a77-468d-a249-3f8848c62dce"/>
+				<text><![CDATA[state]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="466" y="2" width="100" height="20" uuid="65a98c1a-20a6-4d9b-9420-2337bf91e747"/>
+				<text><![CDATA[country]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="79" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="0" y="0" width="555" height="15" uuid="d576f0a1-b7c8-4051-8e53-e3a583b6612e"/>
+			</frame>
+			<textField>
+				<reportElement x="117" y="15" width="100" height="20" uuid="6e519bc2-b027-45ef-9ffc-61aa1f05e027"/>
+				<textFieldExpression><![CDATA[$F{uname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="232" y="15" width="100" height="20" uuid="6958fd3e-668d-4b72-9b6d-1573ec41c3c5"/>
+				<textFieldExpression><![CDATA[$F{city}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="351" y="15" width="100" height="20" uuid="21e37708-48e1-4de2-8b56-e3908334689e"/>
+				<textFieldExpression><![CDATA[$F{state}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="15" width="100" height="20" uuid="a0cb406d-b07c-4dd9-a6a9-7d2a6fffaf36"/>
+				<textFieldExpression><![CDATA[$F{uid}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="466" y="15" width="100" height="20" uuid="d519c6b9-02db-4f33-ab77-b8484a0b92ae"/>
+				<textFieldExpression><![CDATA[$F{country}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="6bc32109-730d-43fd-8c09-2b0947a36562"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="-21" y="1" width="597" height="24" forecolor="#D0B48E" backcolor="#F2EBDF" uuid="f88f0fec-e956-44aa-8ddb-d2e686d060d3"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="533" y="0" width="40" height="20" forecolor="#736343" uuid="e67c8d0f-c3bb-44d7-bdd8-c5866a9f2a5e"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="453" y="0" width="80" height="20" forecolor="#736343" uuid="e32b63cf-5ef2-4d5b-8d53-7378184e25a2"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="22" y="1" width="197" height="20" forecolor="#736343" uuid="ca413937-d8dd-4457-bebb-d161c12952c7"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

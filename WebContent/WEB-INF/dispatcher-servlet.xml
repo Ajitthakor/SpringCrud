@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:ehcache="http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring"
+
+	xmlns:p="http://www.springframework.org/schema/p"
+
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context-3.1.xsd
+http://www.springframework.org/schema/tx
+http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+http://www.springframework.org/schema/mvc
+http://www.springframework.org/schema/mvc/spring-mvc.xsd 
+http://www.springframework.org/schema/task
+http://www.springframework.org/schema/task/spring-task-3.0.xsd">
+
+	<mvc:annotation-driven></mvc:annotation-driven>
+	<task:annotation-driven></task:annotation-driven>
+
+	<!-- <mvc:resources mapping="/jasperReport/**" location="/jasperReport/*" /> -->
+	
+	<mvc:resources mapping="/img/**" location="/img/*" />
+	<mvc:resources mapping="/css/**" location="/css/*" />
+	<mvc:resources mapping="/js/**" location="/js/*" />
+	<mvc:resources mapping="/js/**" location="/js_1/*" />
+	<mvc:resources mapping="/fonts/**" location="/fonts/*" />
+	<mvc:resources mapping="/cdrfile/**" location="/cdrfile/*" />
+	<mvc:resources mapping="/bower_components/**" location="/bower_components/*" />
+
+
+	<context:property-placeholder location="/WEB-INF/jdbc.properties" />
+	
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${database.driver}" />
+		<property name="url" value="${database.url}" />
+		<property name="username" value="${database.user}" />
+		<property name="password" value="${database.password}" />
+	</bean>
+
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver" />
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" />
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"></bean>
+
+
+
+	<context:component-scan base-package="com.training" />
+	
+	<import resource="spring-security.xml"/>
+	<tx:annotation-driven transaction-manager="hibernateTransactionManager"></tx:annotation-driven>
+	
+	<bean id="jspViewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="/WEB-INF/jsp/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+	<!-- <bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping" 
+		/> <bean class="com.training.controller.MultyFormController"></bean> -->
+
+	<bean id="validator"
+		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
+
+	
+	
+	
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="annotatedClasses">
+			<list>
+				<value>com.training.bean.user</value>
+				<value>com.training.bean.courses</value>
+				<!-- <value>com.training.bean.student</value> -->
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+				<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+				<!-- <prop key="hibernate.connection_pool_size">${hibernate.connection_pool_size}</prop> -->
+			</props>
+			
+		</property>
+		<!-- <property name="show_sql">true</property> -->
+	</bean>
+
+	<!-- For the hibernate transaction... -->
+	<bean id="hibernateTransactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<!-- Get result in format -->
+	<bean id="jsonConverter"
+		class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+		<property name="supportedMediaTypes" value="application/json" />
+	</bean>
+
+	<!--Sending the mail... -->
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<!-- SMTP settings -->
+		<property name="host" value="smtp.gmail.com" />
+		<property name="port" value="587" />
+		<property name="username" value="ajitthakor104@gmail.com" />
+		<property name="password" value="9904173069@@@thakor" />
+		<property name="javaMailProperties">
+			<!-- additional properties specific to JavaMail -->
+			<props>
+				<prop key="mail.transport.protocol">smtp</prop>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- For the Fileupload... -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+
+	<!-- Password Encription... -->
+	<bean id="encoder"
+		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+		<constructor-arg name="strength" value="10" />
+	</bean>
+	
+	<!-- For the Jasper Report... -->
+	
+	<bean id="pdfReport"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView"
+		p:url="classpath:Report/UserReport.jrxml"
+		p:reportDataKey="datasource" />
+		
+	<bean id="xlsReport"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsXlsView"
+		p:url="classpath:Report/UserReport.jrxml"
+		p:reportDataKey="datasource" />
+		
+		<bean id="htmlReport"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsHtmlView"
+		p:url="classpath:Report/UserReport.jrxml" 
+		p:reportDataKey="datasource" />
+	
+	<bean id="csvReport"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsCsvView"
+		p:url="classpath:Report/UserReport.jrxml"
+		p:reportDataKey="datasource" />
+		
+		
+	
+
+</beans>
